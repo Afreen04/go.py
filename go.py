@@ -8,6 +8,7 @@ from go import Board, BoardError, View, clear, getch
 
 def main():
     # Get arguments
+    """
     parser = argparse.ArgumentParser(description='Starts a game of go in the terminal.')
     parser.add_argument('-s', '--size', type=int, default=19, help='size of board')
 
@@ -16,9 +17,9 @@ def main():
     if args.size < 7 or args.size > 19:
         sys.stdout.write('Board size must be between 7 and 19!\n')
         sys.exit(0)
-
+"""
     # Initialize board and view
-    board = Board(args.size)
+    board = Board(7)
     view = View(board)
     err = None
 
@@ -28,6 +29,12 @@ def main():
         Makes a move at the current position of the cursor for the current
         turn.
         """
+        print("Getting our input for x and y")
+        x = input("Input x:")
+        y = input("Input y:")
+
+        view.set_coordinates(x,y)
+        
         board.move(*view.cursor)
         view.redraw()
 
@@ -80,10 +87,12 @@ def main():
 
         try:
             # Execute selected action
-            KEYS[c]()
+            #KEYS[c]()
+            move()
         except BoardError as be:
             # Board error (move on top of other piece, suicidal move, etc.)
-            err = be.message
+            print("Illegal Move")
+            #err = be.message
         except KeyError:
             # Action not found, do nothing
             pass

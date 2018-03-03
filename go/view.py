@@ -101,6 +101,12 @@ class View(Array):
             self._in_height(self._cursor[1]),
         )
 
+    def set_coordinates(self, x,y):
+        self._cursor = (
+            self._in_width(int(x) + 1),
+            self._in_height(int(y) + 1),
+        )
+
     @property
     def cursor(self):
         return self._cursor
@@ -108,7 +114,7 @@ class View(Array):
     def __str__(self):
         arr = self.copy
 
-        if self._cursor:
-            arr[self._cursor] = self.CURSOR
+        #if self._cursor:
+         #   arr[self._cursor] = self.CURSOR
 
         return '\n'.join([' '.join(row) for row in arr._array])

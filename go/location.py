@@ -1,4 +1,4 @@
-from utils import bold
+from .utils import bold
 
 
 class LocationError(Exception):
