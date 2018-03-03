@@ -32,9 +32,9 @@ class View(Array):
         ]
 
         # Draw hoshi points
-        for i in self._hoshis:
-            if self[i] == str(Board.EMPTY):
-                self[i] = self.HOSHI
+        #for i in self._hoshis:
+         #   if self[i] == str(Board.EMPTY):
+          #      self[i] = self.HOSHI
 
     def redraw(self):
         self._reset()

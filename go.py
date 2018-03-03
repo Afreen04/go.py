@@ -2,8 +2,11 @@
 
 import argparse
 import sys
+import numpy as numpy
 
-from go import Board, BoardError, View, clear, getch
+from collections import deque
+
+from go import Board, BoardError, View, clear, getch, Location
 
 
 def main():
@@ -22,6 +25,7 @@ def main():
     board = Board(7)
     view = View(board)
     err = None
+    board_history = deque(maxlen=8)
 
     # User actions
     def move():
@@ -37,6 +41,35 @@ def main():
         
         board.move(*view.cursor)
         view.redraw()
+
+        print("Board state")
+        #print(*board._state) #This is list
+        
+        board_state =  []
+
+        #Creating the board state
+
+        for item in board._state[0]:
+            row = []
+            for elem in item:
+                #print(type(elem))
+                if elem == Location('empty'):
+                    row.append(0)
+                elif elem == Location('black'):
+                    row.append(1)
+                else:
+                    row.append(2)
+            
+            board_state.append(row)
+
+        board_history.append(board_state)
+
+        print(board_state)
+        ctr = 0
+        for item in board_history:
+            print(ctr,"  ",item)
+            ctr = ctr + 1
+        #print("\n".join(board_history))
 
     def undo():
         """
@@ -73,7 +106,7 @@ def main():
     # Main loop
     while True:
         # Print board
-        clear()
+        #clear()
         sys.stdout.write('{0}\n'.format(view))
         sys.stdout.write('Black: {black} <===> White: {white}\n'.format(**board.score))
         sys.stdout.write('{0}\'s move... '.format(board.turn))
@@ -83,7 +116,7 @@ def main():
             err = None
 
         # Get action key
-        c = getch()
+       # c = getch()
 
         try:
             # Execute selected action
